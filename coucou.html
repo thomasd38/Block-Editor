@@ -123,6 +123,43 @@
         #admin-left:hover {
             left: -5px;
         }
+        .hidder {
+            display: none;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+        .tda-modal {
+            background: white;
+            position: absolute;
+            top: 20%;
+            border-radius: 5px;
+            border: solid 1px grey;
+            min-height: 300px;
+            width: 500px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .tda-modal a {
+            display: block;
+            text-align: center;
+            font-size: 20px;
+        }
+        .tda-modal a:hover {
+            cursor: pointer;
+        }
+        .tda-modal div {
+            position: relative;
+        }
+        .tda-modal-title {
+            position: relative;
+            height: 75px;
+            line-height: 75px;
+        }
     </style>
     <title>Local Storage</title>
 </head>
@@ -138,9 +175,22 @@
         <input type="text" oninput="setSize(this.value);">
         <p>Full size</p>
         <input type="text" oninput="setFullSize(this.value);">
+        <input type="button" value="Load a map" onclick="showLoadMap();">
         <input type="button" value="Generate" onclick="resetMap();">
     </div>
     <div id="admin-left" class="admin"></div>
+    <!-- modal will all the different contents -->
+    <div class="hidder" id="hidder">
+        <div class="tda-modal">
+            <div class="tda-modal-title">
+                <h3 id="modal-title"></h3>
+                <span class="glyphicon glyphicon-remove" aria-hidden="true" onclick="closeModal();"></span>
+            </div>
+            <div class="tda-modal-content" id="modal-content"></div>
+            <div class="tda-modal-footer" id="modal-footer"></div>
+        </div>
+    </div>
+    <!-- ------------------------------------- -->
     <script src="main.js"></script>
 </body>
 </html>

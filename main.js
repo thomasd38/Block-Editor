@@ -1,11 +1,17 @@
 function $(elem) {
     return document.querySelector(elem);
 }
-
+// duplicate admin pannel content on the admin left pannel
 $('#admin-left').innerHTML = $('#admin').innerHTML;
 
+// ELEMENTS
 let container = $('#container');
 let canva = $('#canva');
+let hidder = $('#hidder');
+let modalTitle = $('#modal-title');
+let modalContent = $('#modal-content');
+let modalFooter = $('#modal-footer');
+// ---
 
 container.addEventListener('mousedown', function(e) {
     click = true;
@@ -15,10 +21,12 @@ container.addEventListener('mouseup', function(e) {
     click = false;
 })
 
+// SET DEBUG
 let debug = false; // set to true to see neighbot in view
 if (!debug) {
     $('#debug').style.border = 'none';
 }
+// ---
 
 let size = 8;
 let fullSize = 540;
@@ -27,12 +35,43 @@ let canvas = [];
 let click = false;
 let w = fullSize/size;
 let h = fullSize/size;
+let maps = [];
+// stub data for maps
+maps.push({
+    name: "The maze",
+    size: "5",
+    canvas: [false,false,false,false,false,false,true,true,true,false,false,true,true,true,false,false,true,true,true,false,false,false,false,false,false]
+});
 
-function loadMap(s, cs) {
-    size = s;
+function showLoadMap() {
+    hidder.style.display = "block";
+    modalTitle.innerHTML = "Map Loader";
+    let HTML = "";
+    maps.forEach(element => {
+        HTML += "<a onclick='loadMap(\""+element.name+"\");'>"+element.name+"</a><br><br>";
+    });
+    modalContent.innerHTML = HTML;
+}
+
+function getMap(name) {
+    for (let i = 0; i < maps.length; i++) {
+        const element = maps[i];
+        if (element.name == name) {
+            return element;
+        }
+    }
+}
+
+function closeModal() {
+    hidder.style.display = "none";
+}
+
+function loadMap(name) {
+    let map = getMap(name);
+    size = map.size;
     grid = false;
     resetMap();
-    canvas = cs;
+    canvas = map.canvas;
     drawCanvas();
 }
 
@@ -113,6 +152,7 @@ function clickCanva(id) {
 
 function drawCanvas() {
     console.clear();
+    closeModal();
     var c = document.getElementById("canva");
     var ctx = c.getContext("2d");
     ctx.clearRect(0, 0, fullSize, fullSize);
@@ -260,7 +300,7 @@ function drawCanva(id) {
         ctx.lineTo(x+((fullSize/size)*1.5),y+((fullSize/size)/2));
     }
     else {
-        ctx.moveTo(x+((fullSize/size)*1.5),y+((fullSize/size)/2))
+        ctx.moveTo(x+((fullSize/size)*1.5),y+((fullSize/size)/2));
     }
     // ---
     // Line 9
@@ -281,6 +321,10 @@ function drawCanva(id) {
         ctx.lineTo(x+(fullSize/size)*1.5,y);
     }
     // ---
+    if (!isRight(id) && isBottom(id) && isBottomRight(id)) {
+        ctx.moveTo(x+((fullSize/size)*1.5),y+((fullSize/size)/2));
+        ctx.lineTo(x+(fullSize/size),y+((fullSize/size)));
+    }
     ctx.stroke();
 }
 
