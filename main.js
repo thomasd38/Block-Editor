@@ -39,7 +39,7 @@ let maps = [];
 // stub data for maps
 maps.push({
     name: "The maze",
-    size: "5",
+    size: 5,
     canvas: [false,false,false,false,false,false,true,true,true,false,false,true,true,true,false,false,true,true,true,false,false,false,false,false,false]
 });
 
