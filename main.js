@@ -30,7 +30,7 @@ if (!debug) {
 
 // const definition
 const DEFAULT_SIZE_VALUE = 8;
-const DEFAULT_FULLSIZE_VALUE = 0;
+const DEFAULT_FULLSIZE_VALUE = 500;
 // ---
 
 let size = DEFAULT_SIZE_VALUE;
@@ -56,6 +56,9 @@ function getLocaleMaps() {
 
 function saveMap() {
     let name = window.prompt("Enter map name : ");
+    while (name == "") {
+        name = window.prompt("You must enter a name");
+    }
     maps.push({
         name: name,
         size: size,
@@ -70,10 +73,10 @@ function saveLocaleMaps(m) {
 
 function showLoadMap() {
     hidder.style.display = "block";
-    modalTitle.innerHTML = "Map Loader";
+    modalTitle.innerHTML = "Load a map";
     let HTML = "";
     maps.forEach(element => {
-        HTML += "<a onclick='loadMap(\""+element.name+"\");'>"+element.name+"</a><br><br>";
+        HTML += "<a onclick='loadMap(\""+element.name+"\");'>"+element.name+"</a><br><div class='map-details'>( size: "+element.size+" )</div><br>";
     });
     modalContent.innerHTML = HTML;
 }
