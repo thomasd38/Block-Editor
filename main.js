@@ -28,20 +28,45 @@ if (!debug) {
 }
 // ---
 
-let size = 8;
-let fullSize = 540;
+// const definition
+const DEFAULT_SIZE_VALUE = 8;
+const DEFAULT_FULLSIZE_VALUE = 0;
+// ---
+
+let size = DEFAULT_SIZE_VALUE;
+let fullSize = DEFAULT_FULLSIZE_VALUE;
 let grid = true;
 let canvas = [];
 let click = false;
 let w = fullSize/size;
 let h = fullSize/size;
 let maps = [];
-// stub data for maps
-maps.push({
-    name: "The maze",
-    size: 5,
-    canvas: [false,false,false,false,false,false,true,true,true,false,false,true,true,true,false,false,true,true,true,false,false,false,false,false,false]
-});
+
+function getLocaleMaps() {
+    maps = localStorage.maps;
+    if (maps === undefined) {
+        maps = [];
+    }
+    else {
+        maps = JSON.parse(maps);
+    }
+    console.log("maps: ", maps);
+    saveLocaleMaps(maps);
+}
+
+function saveMap() {
+    let name = window.prompt("Enter map name : ");
+    maps.push({
+        name: name,
+        size: size,
+        canvas: canvas
+    });
+    saveLocaleMaps(maps);
+}
+
+function saveLocaleMaps(m) {
+    localStorage.maps = JSON.stringify(m);
+}
 
 function showLoadMap() {
     hidder.style.display = "block";
@@ -80,11 +105,11 @@ function clearTable() {
 }
 
 function setSize(val) {
-    size = (val != "") ? parseInt(val,10) : 8;
+    size = (val != "") ? parseInt(val,10) : DEFAULT_SIZE_VALUE;
 }
 
 function setFullSize(val) {
-    fullSize = (val != "") ? parseInt(val,10) : 540;
+    fullSize = (val != "") ? parseInt(val,10) : DEFAULT_FULLSIZE_VALUE;
 }
 
 function toggleGrid() {
@@ -151,7 +176,6 @@ function clickCanva(id) {
 }
 
 function drawCanvas() {
-    console.clear();
     closeModal();
     var c = document.getElementById("canva");
     var ctx = c.getContext("2d");
@@ -236,7 +260,6 @@ function drawCanva(id) {
     ctx.strokeStyle = "black";
     ctx.lineWidth="1";
     ctx.moveTo(x,y);
-    console.log("x: "+x, "y: "+y, "fullSize: "+fullSize, "size: "+size, x+(fullSize/size));
     // Line 1
     if (!isTop(id)) {
         ctx.lineTo(x+(fullSize/size),y);
@@ -296,7 +319,6 @@ function drawCanva(id) {
     ctx.moveTo(x+((fullSize/size)*1.5),y-((fullSize/size)/2));
     // Line 8
     if (!isRight(id) && !isTopRight(id)) {
-        console.log(id);
         ctx.lineTo(x+((fullSize/size)*1.5),y+((fullSize/size)/2));
     }
     else {
@@ -332,3 +354,4 @@ function drawCanva(id) {
 // main programm
 buildBlock();
 drawCanvas();
+getLocaleMaps();
