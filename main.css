@@ -1,7 +1,10 @@
+body {
+    overflow: hidden;
+}
 .canva {
     font-size: 0px;
-    padding-top: 20px;
     text-align: center;
+    top: -15px;
 }
 .canva-debug {
     font-size: 12px;
@@ -29,8 +32,8 @@
 #container, #canva {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+    top: 20%;
+    transform: translateX(-50%);
 }
 #container {
     z-index: 50;
@@ -91,6 +94,7 @@
     border-radius: 5px;
     transition: all 0.3s ease;
     text-align: center;
+    z-index: 200;
 }
 .admin:hover {
     transition: all 0.3s ease;

@@ -30,9 +30,11 @@ if (!debug) {
 
 // const definition
 const DEFAULT_SIZE_VALUE = 8;
+const DEFAULT_LINE_VALUE = 8;
 const DEFAULT_FULLSIZE_VALUE = 500;
 // ---
 
+let line = DEFAULT_LINE_VALUE;
 let size = DEFAULT_SIZE_VALUE;
 let fullSize = DEFAULT_FULLSIZE_VALUE;
 let grid = true;
@@ -119,6 +121,10 @@ function setSize(val) {
     size = (val != "") ? parseInt(val,10) : DEFAULT_SIZE_VALUE;
 }
 
+function setLine(val) {
+    line = (val != "") ? parseInt(val,10) : DEFAULT_LINE_VALUE;
+}
+
 function setFullSize(val) {
     fullSize = (val != "") ? parseInt(val,10) : DEFAULT_FULLSIZE_VALUE;
 }
@@ -145,7 +151,7 @@ function buildBlock() {
     canva.style.width = fullSize+"px";
     canva.style.height = fullSize+"px";
     let html = "";
-    for (let i = 0; i < size; i++) {
+    for (let i = 0; i < line; i++) {
         html += "<span style='height: "+(100/size)+"%'>";
         let containerClass = (debug) ? "canva-debug" : "";
         for (let j = 0; j < size; j++) {
