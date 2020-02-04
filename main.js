@@ -60,7 +60,7 @@ function saveMap() {
         name = window.prompt("You MUST enter a name.");
     }
     if (name == null) {
-        return;
+        return; 
     }
     else {
         maps.push({
