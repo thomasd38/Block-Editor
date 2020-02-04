@@ -57,14 +57,19 @@ function getLocaleMaps() {
 function saveMap() {
     let name = window.prompt("Enter map name : ");
     while (name == "") {
-        name = window.prompt("You must enter a name");
+        name = window.prompt("You MUST enter a name.");
     }
-    maps.push({
-        name: name,
-        size: size,
-        canvas: canvas
-    });
-    saveLocaleMaps(maps);
+    if (name == null) {
+        return;
+    }
+    else {
+        maps.push({
+            name: name,
+            size: size,
+            canvas: canvas
+        });
+        saveLocaleMaps(maps);
+    }
 }
 
 function saveLocaleMaps(m) {
@@ -78,6 +83,9 @@ function showLoadMap() {
     maps.forEach(element => {
         HTML += "<a onclick='loadMap(\""+element.name+"\");'>"+element.name+"</a><br><div class='map-details'>( size: "+element.size+" )</div><br>";
     });
+    if (HTML == "") {
+        HTML += "<p style='font-size: 18px; text-align: center;'>No maps to load.</p>";
+    }
     modalContent.innerHTML = HTML;
 }
 
