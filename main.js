@@ -119,9 +119,8 @@ function loadMap(name) {
     size = map.size;
     line = map.line;
     fullSize = map.fullSize;
-    console.log(map.fullSize, map.line, map.size);
     grid = false;
-    resetMap();
+    resetMap(true);
     canvas = map.canvas;
     drawCanvas();
 }
@@ -147,8 +146,8 @@ function toggleGrid() {
     drawCanvas();
 }
 
-function resetMap() {
-    if ($('#line').value == "") {
+function resetMap(loadMap = false) {
+    if ($('#line').value == "" && !loadMap) {
         line = size;
     }
     clearTable();
