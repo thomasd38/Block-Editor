@@ -22,7 +22,7 @@ container.addEventListener('mouseup', function(e) {
 })
 
 // SET DEBUG
-let debug = false; // set to true to see neighbot in view
+let debug = false; // set to true to see neighbor in view
 if (!debug) {
     $('#debug').style.border = 'none';
 }
@@ -68,6 +68,8 @@ function saveMap() {
         maps.push({
             name: name,
             size: size,
+            line, line,
+            fullSize, fullSize,
             canvas: canvas
         });
         saveLocaleMaps(maps);
@@ -100,6 +102,14 @@ function getMap(name) {
     }
 }
 
+function setMap(map) {
+    for (let i = 0; i < maps.length; i++) {
+        if (maps[i].name == map.name) {
+            maps[i] = map;
+        }
+    }
+}
+
 function closeModal() {
     hidder.style.display = "none";
 }
@@ -107,6 +117,9 @@ function closeModal() {
 function loadMap(name) {
     let map = getMap(name);
     size = map.size;
+    line = map.line;
+    fullSize = map.fullSize;
+    console.log(map.fullSize, map.line, map.size);
     grid = false;
     resetMap();
     canvas = map.canvas;
@@ -135,6 +148,9 @@ function toggleGrid() {
 }
 
 function resetMap() {
+    if ($('#line').value == "") {
+        line = size;
+    }
     clearTable();
     click = false;
     w = fullSize/size;
@@ -213,6 +229,7 @@ function drawCanvas() {
     drawElem.forEach(element => {
         drawCanva(element);
     });
+    drawMainBorder();
 }
 
 
@@ -266,6 +283,20 @@ function drawBorder(id) {
         ctx.lineTo(x,y);
         ctx.stroke();
     }
+}
+
+function drawMainBorder() {
+    var c = document.getElementById("canva");
+        var ctx = c.getContext("2d");
+        ctx.beginPath();
+        ctx.strokeStyle = "#efefef";
+        ctx.lineWidth="2";
+        ctx.moveTo(0,0);
+        ctx.lineTo(fullSize,0);
+        ctx.lineTo(fullSize,(fullSize/size)*line);
+        ctx.lineTo(0,(fullSize/size)*line);
+        ctx.lineTo(0,0);
+        ctx.stroke();
 }
 
 function drawCanva(id) {

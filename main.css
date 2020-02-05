@@ -11,18 +11,12 @@ body {
 }
 .canvas-container span:first-child {
     margin-top: 0px;
-    border-top: solid 1px lightgrey;
 }
 .canvas-container span {
     display: block;
     width: fit-content;
-    border-left: solid 1px lightgrey;
-    border-right: solid 1px lightgrey;
     width: 100%;
     position: relative;
-}
-.canvas-container span:last-child {
-    border-bottom: solid 1px lightgrey;
 }
 .canvas-container div {
     position: relative;
