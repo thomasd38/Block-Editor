@@ -175,3 +175,11 @@ body {
     margin-top: -24px;
     font-size: 11px;
 }
+#menu {
+    color: white;
+}
+#menu h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 6rem;
+}

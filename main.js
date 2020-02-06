@@ -8,10 +8,23 @@ $('#admin-left').innerHTML = $('#admin').innerHTML;
 let container = $('#container');
 let canva = $('#canva');
 let hidder = $('#hidder');
+let menu = $('#menu');
+menu.style.display = 'none';
 let modalTitle = $('#modal-title');
 let modalContent = $('#modal-content');
 let modalFooter = $('#modal-footer');
 // ---
+
+document.body.addEventListener('keydown', function(e) {
+    if (e.keyCode == 27) { //escape
+        if (menu.style.display == 'none') {
+            openMenu();
+        }
+        else {
+            closeMenu();
+        }
+    }
+})
 
 container.addEventListener('mousedown', function(e) {
     click = true;
@@ -76,6 +89,14 @@ function saveMap() {
     }
 }
 
+function openMenu() {
+    menu.style.display = 'block';
+}
+
+function closeMenu() {
+    menu.style.display = 'none';
+}
+
 function saveLocaleMaps(m) {
     localStorage.maps = JSON.stringify(m);
 }
@@ -85,7 +106,7 @@ function showLoadMap() {
     modalTitle.innerHTML = "Load a map";
     let HTML = "";
     maps.forEach(element => {
-        HTML += "<a onclick='loadMap(\""+element.name+"\");'>"+element.name+"</a><br><div class='map-details'>( size: "+element.size+" )</div><br>";
+        HTML += "<a onclick='loadMap(\""+element.name+"\");'>"+element.name+"</a><br><div class='map-details'>( grid: "+element.size+"/"+element.line+" / size: "+element.fullSize+" )</div><br>";
     });
     if (HTML == "") {
         HTML += "<p style='font-size: 18px; text-align: center;'>No maps to load.</p>";
