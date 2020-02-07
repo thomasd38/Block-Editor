@@ -13,6 +13,12 @@ menu.style.display = 'none';
 let modalTitle = $('#modal-title');
 let modalContent = $('#modal-content');
 let modalFooter = $('#modal-footer');
+let alertOK = $('#alertOKContainer');
+alertOK.style.top = "-100px";
+let alertNotOK = $('#alertNotOKContainer');
+alertNotOK.style.top = "-100px";
+let fullSizeSliderContainer = $('#fullSizeSliderContainer');
+let fullSizeSlider = $('#fullSizeSlider');
 // ---
 
 document.body.addEventListener('keydown', function(e) {
@@ -56,6 +62,7 @@ let click = false;
 let w = fullSize/size;
 let h = fullSize/size;
 let maps = [];
+let currentMap = "";
 
 function getLocaleMaps() {
     maps = localStorage.maps;
@@ -69,15 +76,54 @@ function getLocaleMaps() {
     saveLocaleMaps(maps);
 }
 
+function customAlert(content, isOK = true) {
+    (isOK) ? showAlertOK(content) : showAlertNotOK(content);
+}
+
+function showAlertOK(content) {
+    alertOK.style.top = "10px";
+    alertOK.innerHTML = content;
+    setTimeout(() => {
+        closeAlertOK();
+    }, 2000);
+}
+
+function showAlertNotOK(content) {
+    alertNotOK.style.top = "10px";
+    alertNotOK.innerHTML = content;
+    setTimeout(() => {
+        closeAlertNotOK();
+    }, 2000);
+}
+
+function closeAlertOK() {
+    alertOK.style.top = "-100px";
+}
+
+function closeAlertNotOK() {
+    alertNotOK.style.top = "-100px";
+}
+
 function saveMap() {
-    let name = window.prompt("Enter map name : ");
-    while (name == "") {
-        name = window.prompt("You MUST enter a name.");
-    }
-    if (name == null) {
-        return; 
+    if (currentMap != "") {
+        setMap({
+            name: currentMap,
+            size: size,
+            line, line,
+            fullSize, fullSize,
+            canvas: canvas
+        });
+        customAlert("Map Saved !");
     }
     else {
+        let name = window.prompt("Enter map name : ");
+        while (name == "") {
+            name = window.prompt("You MUST enter a name.");
+        }
+        if (name == null) {
+            customAlert('Map not saved.', false);
+            return;
+        }
         maps.push({
             name: name,
             size: size,
@@ -85,8 +131,9 @@ function saveMap() {
             fullSize, fullSize,
             canvas: canvas
         });
-        saveLocaleMaps(maps);
+        customAlert("Map Saved !");
     }
+    saveLocaleMaps(maps);
 }
 
 function openMenu() {
@@ -95,6 +142,24 @@ function openMenu() {
 
 function closeMenu() {
     menu.style.display = 'none';
+}
+
+function toggleSliderFullSize() {
+    if (fullSizeSliderContainer.style.display == 'block') {
+        closeSliderFullSize();
+    }
+    else {
+        openSliderFullSize();
+    }
+}
+
+function openSliderFullSize() {
+    fullSizeSliderContainer.style.display = 'block';
+    fullSizeSlider.value = fullSize;
+}
+
+function closeSliderFullSize() {
+    fullSizeSliderContainer.style.display = 'none';
 }
 
 function saveLocaleMaps(m) {
@@ -125,6 +190,16 @@ function getMap(name) {
 
 function setMap(map) {
     for (let i = 0; i < maps.length; i++) {
+        const element = maps[i];
+        if (element.name == name) {
+            element = map;
+            return element;
+        }
+    }
+}
+
+function setMap(map) {
+    for (let i = 0; i < maps.length; i++) {
         if (maps[i].name == map.name) {
             maps[i] = map;
         }
@@ -135,15 +210,28 @@ function closeModal() {
     hidder.style.display = "none";
 }
 
-function loadMap(name) {
+function loadMap(name, customSize = 0) {
     let map = getMap(name);
+    currentMap = name;
     size = map.size;
     line = map.line;
-    fullSize = map.fullSize;
+    fullSize = (customSize == 0) ? map.fullSize : customSize;
     grid = false;
     resetMap(true);
     canvas = map.canvas;
     drawCanvas();
+    if (customSize == 0)
+        customAlert("Map loaded !");
+}
+
+function resizeMap(val) {
+    fullSize = val;
+    if (currentMap != "") {
+        loadMap(currentMap, fullSize);
+    }
+    else {
+        resetMap();
+    }
 }
 
 function clearTable() {

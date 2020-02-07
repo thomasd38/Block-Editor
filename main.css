@@ -121,7 +121,7 @@ body {
     right: 0;
     left: 0;
     background: rgba(0,0,0,0.5);
-    z-index: 99;
+    z-index: 999;
 }
 .tda-modal {
     background: white;
@@ -171,7 +171,7 @@ body {
     transition: all 0.3s ease;
 }
 .map-details {
-    text-align: center;
+    text-align: center; 
     margin-top: -24px;
     font-size: 11px;
 }
@@ -182,4 +182,73 @@ body {
     width: 100%;
     text-align: center;
     font-size: 6rem;
+}
+.slidecontainer {
+    width: 100%;
+    position: absolute;
+    padding: 20px;
+    bottom: 0px;
+    z-index: 200;
+}
+  
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+  
+.slider:hover {
+    opacity: 1;
+}
+  
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+  
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+#fullSizeSliderContainer {
+    display: none;
+}
+
+.alertContainer {
+    color: white;
+    position: absolute;
+    transition: all 0.3s ease;
+    min-width: 300px;
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#alertOKContainer {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+#alertNotOKContainer {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
 }

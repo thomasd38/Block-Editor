@@ -15,13 +15,14 @@
     <div id="debug"></div>
     <div id="admin" class="admin">
         <h3>Admin pannel</h3>
-        <input type="button" value="Toggle Grid" onclick="toggleGrid();">
+        <input title="Show / hide the grid for the blocks" type="button" value="Toggle Grid" onclick="toggleGrid();">
         <p>Cols</p>
         <input type="text" oninput="setSize(this.value);">
         <p>Rows</p>
         <input type="text" id="line" oninput="setLine(this.value);">
         <p>Full size</p>
         <input type="text" oninput="setFullSize(this.value);">
+        <input type="button" onclick="toggleSliderFullSize();" value="Resize map">
         <input type="button" value="Load a map" onclick="showLoadMap();">
         <input type="button" value="Save map" onclick="saveMap();">
         <input type="button" value="Generate" onclick="resetMap();">
@@ -44,6 +45,11 @@
         </div>
     </div>
     <!-- ------------------------------------ -->
+    <div class="slidecontainer" id="fullSizeSliderContainer">
+        <input id="fullSizeSlider" oninput="resizeMap(this.value)" type="range" min="1" max="2000" value="50" class="slider" id="myRange">
+    </div>
+    <div class="alertContainer" id="alertOKContainer"></div>
+    <div class="alertContainer" id="alertNotOKContainer"></div>
     <script src="main.js"></script>
 </body>
 </html>
