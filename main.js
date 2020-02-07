@@ -210,28 +210,26 @@ function closeModal() {
     hidder.style.display = "none";
 }
 
-function loadMap(name, customSize = 0) {
+function loadMap(name) {
     let map = getMap(name);
     currentMap = name;
     size = map.size;
     line = map.line;
-    fullSize = (customSize == 0) ? map.fullSize : customSize;
+    fullSize = map.fullSize;
+    fullSizeSlider.value = fullSize;
     grid = false;
     resetMap(true);
     canvas = map.canvas;
     drawCanvas();
-    if (customSize == 0)
-        customAlert("Map loaded !");
+    customAlert("Map loaded !");
 }
 
 function resizeMap(val) {
+    let tmpCanvas = canvas;
     fullSize = val;
-    if (currentMap != "") {
-        loadMap(currentMap, fullSize);
-    }
-    else {
-        resetMap();
-    }
+    resetMap(true);
+    canvas = tmpCanvas;
+    drawCanvas();
 }
 
 function clearTable() {
